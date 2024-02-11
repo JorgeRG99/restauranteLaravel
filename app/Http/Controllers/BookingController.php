@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingConfirm;
 use App\Models\Booking;
 use App\Models\CreditCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -31,6 +33,8 @@ class BookingController extends Controller
             'credit_card_id' => $creditCard->id,
             'commensals' => $data->commensals
         ]);
+
+        Mail::to($data->email)->send(new BookingConfirm($data->name, $data->surname, $data->date, $data->hour));
 
 
         return response()->json(['response' => 'Booking created successfully'], 200);
@@ -64,6 +68,8 @@ class BookingController extends Controller
             'credit_card_id' => $creditCard->id,
             'commensals' => $data->commensals
         ]);
+
+        Mail::to($user->email)->send(new BookingConfirm($user->name, $user->surname, $data->date, $data->hour));
 
         return response()->json(['response' => 'Booking created successfully'], 200);
     }
