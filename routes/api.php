@@ -25,6 +25,7 @@ Route::get('/unavailableHours', [BookingController::class, 'getUnavailableHoursO
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getUserSessionData', [UserController::class, 'getUserSessionData']);
+    Route::get('/getUserBookings', [UserController::class, 'getUserBookings']);
     Route::post('/createBookingAuth', [BookingController::class, 'createAuthenticated']);
     Route::delete('/deleteBooking', [BookingController::class, 'deleteAuthenticated']);
     Route::post('/logout', [AuthController::class, 'logout']);
